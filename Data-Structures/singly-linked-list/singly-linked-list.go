@@ -98,6 +98,48 @@ func (s *singleList) Traverse() error {
 	return nil
 }
 
+// GetAt returns node at given position from linked list
+func (l *singleList) GetAt(pos int) *ele {
+	ptr := l.head
+	if pos < 0 {
+		return ptr
+	}
+	if pos > (l.len - 1) {
+		return nil
+	}
+	for i := 0; i < pos; i++ {
+		ptr = ptr.next
+	}
+	return ptr
+}
+
+// InsertAt inserts new node at given position
+func (l *singleList) InsertAt(pos int, name string) {
+	// create a new node
+	// newNode := Node{}
+	ele := &ele{
+		name: name,
+	}
+	// newNode.value = value
+	// validate the position
+	if pos < 0 {
+		return
+	}
+	if pos == 0 {
+		l.head = ele
+		l.len++
+		return
+	}
+	if pos > l.len {
+		return
+	}
+	n := l.GetAt(pos)
+	ele.next = n
+	prevNode := l.GetAt(pos - 1)
+	prevNode.next = ele
+	l.len++
+}
+
 func main() {
 	singleList := initList()
 	fmt.Printf("AddFront: A\n")
